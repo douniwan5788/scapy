@@ -1811,7 +1811,7 @@ class PacketListField(_PacketField[List[BasePacket]]):
                 if cls is not None:
                     try:
                         # we want to set parent wherever possible
-                        p = cls(remain, _parent=pkt)
+                        p = cls(remain, _parent=pkt, _index=len(lst))
                     except TypeError:
                         p = cls(remain)
                 else:

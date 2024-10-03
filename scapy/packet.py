@@ -92,8 +92,8 @@ class Packet(
         "original", "explicit", "raw_packet_cache",
         "raw_packet_cache_fields", "_pkt", "post_transforms",
         "stop_dissection_after",
-        # then payload, underlayer and parent
-        "payload", "underlayer", "parent",
+        # then payload, underlayer, parent and index
+        "payload", "underlayer", "parent", "index"
         "name",
         # used for sr()
         "_answered",
@@ -151,6 +151,7 @@ class Packet(
                  _internal=0,  # type: int
                  _underlayer=None,  # type: Optional[Packet]
                  _parent=None,  # type: Optional[Packet]
+                 _index=None,  # type: Optional[int]
                  stop_dissection_after=None,  # type: Optional[Type[Packet]]
                  **fields  # type: Any
                  ):
@@ -170,6 +171,7 @@ class Packet(
         self.init_fields(bool(_pkt))
         self.underlayer = _underlayer
         self.parent = _parent
+        self.index = _index
         if isinstance(_pkt, bytearray):
             _pkt = bytes(_pkt)
         self.original = _pkt
@@ -425,6 +427,7 @@ class Packet(
         clone.overloaded_fields = self.overloaded_fields.copy()
         clone.underlayer = self.underlayer
         clone.parent = self.parent
+        clone.index = self.index
         clone.explicit = self.explicit
         clone.raw_packet_cache = self.raw_packet_cache
         clone.raw_packet_cache_fields = self.copy_fields_dict(
@@ -1141,6 +1144,7 @@ class Packet(
         pkt.time = self.time
         pkt.underlayer = self.underlayer
         pkt.parent = self.parent
+        pkt.index = self.index
         pkt.post_transforms = self.post_transforms
         pkt.raw_packet_cache = self.raw_packet_cache
         pkt.raw_packet_cache_fields = self.copy_fields_dict(
